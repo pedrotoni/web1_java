@@ -9,6 +9,7 @@
   <input type="text" th:field="*{nome}" required/><br/>
   <label>CPF:</label>
   <input type="text" th:field="*{cpf}" required/><br/>
+  <div th:if="${erro}" th:text="${erro}" style="color: red;"></div>
   <button type="submit">Adicionar!</button>
 </form>
 </body>

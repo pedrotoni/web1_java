@@ -67,4 +67,12 @@ public class ClienteController {
         return true;
     }
 
+    @GetMapping("/{clienteId}/delete")
+    public String deletarCliente(@PathVariable("clienteId") Long veiculoId) {
+        this.clienteService.removeCliente(veiculoId);
+        return "redirect:/clientes";
+
+    }
+
+
 }

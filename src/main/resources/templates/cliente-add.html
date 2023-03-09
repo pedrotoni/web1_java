@@ -1,16 +1,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Adicionar Clientes!</title>
+  <title>Form</title>
 </head>
 <body>
-<h1>Insira os dados abaixo para adicionar um cliente</h1>
-<form th:action="@{/clientes/add}" method="post" th:object="${cliente}">
+<h1 th:text="${add} ? 'Cadastro de Clientes' : 'Atualização de Clientes'"></h1>
+<form th:action="${add} ? @{/clientes/add} : @{/clientes/{clienteId}/edit(clienteId=${cliente.id})}"
+      th:method="${add} ? 'POST' : 'PUT'" th:object="${cliente}">
   <label>Nome:</label>
   <input type="text" th:field="*{nome}" required/><br/>
   <label>CPF:</label>
   <input type="text" th:field="*{cpf}" required/><br/>
   <div th:if="${erro}" th:text="${erro}" style="color: red;"></div>
-  <button type="submit">Adicionar!</button>
+  <button type="submit">Enviar</button>
 </form>
 </body>
 </html>

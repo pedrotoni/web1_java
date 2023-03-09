@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/clientes")
@@ -27,6 +28,7 @@ public class ClienteController {
 
     @GetMapping("/add")
     public String adicionaCliente(Model model) {
+        model.addAttribute("add", Boolean.TRUE);
         model.addAttribute("cliente", new Cliente());
         return "cliente-add";
     }
@@ -71,8 +73,27 @@ public class ClienteController {
     public String deletarCliente(@PathVariable("clienteId") Long veiculoId) {
         this.clienteService.removeCliente(veiculoId);
         return "redirect:/clientes";
-
     }
+
+    @GetMapping("/{clienteId}/edit")
+    public String mostraEdicaoCliente(Model model,
+                                @PathVariable("clienteId") Long clienteId) {
+        Optional<Cliente> optionalCliente =
+                this.clienteService.buscaClientePorId(clienteId);
+        optionalCliente.ifPresent(cliente ->
+                model.addAttribute("cliente",cliente));
+        model.addAttribute("add", Boolean.FALSE);
+        return "cliente-add";
+    }
+
+    @PutMapping("/{clienteId}/edit")
+    public String editarCliente(@ModelAttribute Cliente cliente,
+                                @PathVariable("clienteId") Long clienteId) {
+        cliente.setId(clienteId);
+        this.clienteService.criaCliente(cliente);
+        return "redirect:/clientes";
+    }
+
 
 
 }

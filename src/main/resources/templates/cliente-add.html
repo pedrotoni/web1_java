@@ -4,7 +4,7 @@
 </head>
 <body>
 <h1 th:text="${add} ? 'Cadastro de Clientes' : 'Atualização de Clientes'"></h1>
-<form th:action="${add} ? @{/clientes/add} : @{/clientes/{clienteId}/edit(clienteId=${cliente.id})}"
+<form th:action="${add} ? @{/clientes/add} : (${cliente.id} != null ? @{/clientes/{clienteId}/edit(clienteId=${cliente.id})} : '')"
       th:method="${add} ? 'POST' : 'PUT'" th:object="${cliente}">
   <label>Nome:</label>
   <input type="text" th:field="*{nome}" required/><br/>
